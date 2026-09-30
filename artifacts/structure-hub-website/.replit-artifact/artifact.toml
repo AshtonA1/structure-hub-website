@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Structure Hub Website"
+description = "A polished public website for Structure Hub Private Limited, showcasing its construction, civil engineering, steel works, roofing, plant hire, hardware, maintenance services, and completed projects across Zimbabwe."
+version = "1.0.0"
+id = "artifacts/structure-hub-website"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19225
+
+[services.development]
+run = "pnpm --filter @workspace/structure-hub-website run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/structure-hub-website", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/structure-hub-website/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19225"
+BASE_PATH = "/"
